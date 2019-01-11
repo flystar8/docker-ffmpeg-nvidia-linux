@@ -1,6 +1,6 @@
 # FFMpeg Nvidia docker-container for building FFMpeg
 
-Dependency: [NVidia docker](https://github.com/NVIDIA/nvidia-docker) support on your Linux installation
+Dependency: [NVidia docker v2](https://github.com/NVIDIA/nvidia-docker) with Cuda 10.0 support on your Linux installation
 
 ```
 ./docker-build.sh

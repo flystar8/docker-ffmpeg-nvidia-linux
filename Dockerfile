@@ -1,10 +1,13 @@
 # Start with NVidia CUDA base image
-FROM nvidia/cuda:10.0-devel
+FROM nvidia/cuda:10.1-devel
 
-MAINTAINER Nobody
+MAINTAINER flystar
+
+RUN rm /etc/apt/sources.list.d/cuda.list && rm /etc/apt/sources.list.d/nvidia-ml.list
+ADD sources.list /etc/apt/sources.list
 
 # Install dependent packages
-RUN apt-get update -qq -y && apt-get -y install \
+RUN apt-get update  && apt-get -y install \
   autoconf \
   automake \
   build-essential \
@@ -43,8 +46,7 @@ RUN apt-get update -qq -y && apt-get -y install \
 RUN git clone https://github.com/FFmpeg/nv-codec-headers /root/nv-codec-headers && \
   cd /root/nv-codec-headers &&\
   make -j8 && \
-  make install -j8 && \
-  cd /root && rm -rf nv-codec-headers
+  make install -j8 
 
 # Following instructions directly from https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
 
@@ -92,7 +94,6 @@ RUN cd ~/ffmpeg_sources/ffmpeg && \
     PATH="$HOME/bin:$PATH" make -j8 && \
     make install -j8 && \
     hash -r
-
 
 ENV NVIDIA_DRIVER_CAPABILITIES video,compute,utility
 
